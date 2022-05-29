@@ -31,11 +31,12 @@ export class DirectoryPage extends BasePage {
 
 	async checkPageView(): Promise<void> {
 		await this.waitForLoad();
-		await this.mainContainer.scrollIntoViewIfNeeded();
 		expect(await this.mainContainer.screenshot()).toMatchSnapshot('directory.png');
 	}
 
 	async clickFilterBtn(filterName: 'All' | 'Community' | 'Staking'): Promise<void> {
+		
+		await this.page.locator(`${filterBtnSelector} >> text=${filterName}`).waitFor({state: 'visible', timeout: 5000});
 		await this.page.locator(`${filterBtnSelector} >> text=${filterName}`).click();
 	}
 
@@ -53,7 +54,6 @@ export class DirectoryPage extends BasePage {
 			url = '?filter=Staking';
 			break;
 	}
-		await this.waitForLoad('networkidle');
 		expect(this.page.url()).toContain(url);
 		expect(this.page.locator(`${filterBtnSelector} >> text=${filterName} >> ..`)).toHaveCSS('border-color', 'rgba(0, 0, 0, 0)');
 	}
@@ -69,6 +69,8 @@ export class DirectoryPage extends BasePage {
 
 	async fillSearchField(text: string): Promise<void> {
 		await this.searchField.type(text);
+		await this.searchField.type(' ', {delay: 3000});
+
 		await this.waitForLoad();
 	}
 

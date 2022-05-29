@@ -1,7 +1,7 @@
 import test from './directory.fixture';
 
 test.describe('Директория', () => {
-	test('Пользователь страницу директорий -> страница загружается', async ({
+	test('Пользователь открывает страницу директорий -> страница загружается', async ({
 		directoryPage,
 	}) => {
 		await directoryPage.checkPageView();
@@ -30,16 +30,7 @@ test.describe('Директория', () => {
 		await directoryPage.checkNewPageUrl(linkedPage, 'trustwallet.com');
 	});
 
-	test('Пользователь кликает кнопке типа в продукте -> Включается фильтр по данному типу', async ({
-		directoryPage,
-	}) => {
-		const typeName = await directoryPage.returnTypeBtnText();
-		
-		await directoryPage.clickTypeBtn();
-		setTimeout(() => {
-			directoryPage.checkCurrentTypeContainText(typeName);
-		}, 500); 
-	});
+	
 
 	test('Пользователь ставит Community фильтр -> фильтр отображается в урле', async ({
 		directoryPage,
@@ -55,14 +46,7 @@ test.describe('Директория', () => {
 		await directoryPage.ckeckIsElementsFiltered('Community');
 	});
 
-	test('Пользователь вводит текст в строку поиска -> в списке результатов только элементы содержащие текст запроса', async ({
-		directoryPage,
-	}) => {
-		const searchReqText = 'trust wallet'
-
-		await directoryPage.fillSearchField(searchReqText);
-		setTimeout( () => {directoryPage.checkSearchResult(searchReqText)}, 3000);
-	});
+	
 
 	test('Пользователь кликает по кнопе Submit DAO -> Переход на страницу suggest us as DAO', async ({
 		directoryPage,
@@ -70,5 +54,23 @@ test.describe('Директория', () => {
 		const daoPage = await directoryPage.catchDaoPage();
 
 		await directoryPage.checkNewPageUrl(daoPage, 'airtable.com');
+	});
+
+	test('Пользователь кликает кнопке типа в продукте -> Включается фильтр по данному типу', async ({
+		directoryPage,
+	}) => {
+		const typeName = await directoryPage.returnTypeBtnText();
+		
+		await directoryPage.clickTypeBtn();
+		await directoryPage.checkCurrentTypeContainText(typeName); 
+	});
+
+	test('Пользователь вводит текст в строку поиска -> в списке результатов только элементы содержащие текст запроса', async ({
+		directoryPage,
+	}) => {
+		const searchReqText = 'trust wallet'
+
+		await directoryPage.fillSearchField(searchReqText);
+		await directoryPage.checkSearchResult(searchReqText);
 	});
 });

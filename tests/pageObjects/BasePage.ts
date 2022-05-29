@@ -12,7 +12,7 @@ export class BasePage {
 
 	async open(pageUrl = this.pageUrl): Promise<void> {
 		await this.page.goto(pageUrl);
-		await this.waitForLoad()
+		await this.waitForLoad('networkidle')
 	}
 
 	async waitForLoad(
