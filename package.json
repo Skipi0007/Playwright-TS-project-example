@@ -9,6 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cypress": "^9.5.1"
+    "cypress": "^9.5.1",
+    "playwright": "^1.22.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.22.2"
   }
 }

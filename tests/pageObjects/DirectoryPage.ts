@@ -88,6 +88,7 @@ export class DirectoryPage extends BasePage {
 		const [newPage] = await Promise.all([
 			this.page.context().waitForEvent('page'),
 			this.clickSubmitDao(),
+			this.waitForLoad('networkidle')
 		]);
 
 		return newPage;
